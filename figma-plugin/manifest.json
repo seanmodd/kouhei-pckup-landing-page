@@ -1,0 +1,7 @@
+{
+  "name": "pckup Landing Page Generator",
+  "id": "pckup-landing-page-gen",
+  "api": "1.0.0",
+  "main": "landing-page.js",
+  "editorType": ["figma", "dev"]
+}
