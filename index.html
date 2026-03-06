@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pckup — Intelligent Last-Mile Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      background-color: #02222a;
+      color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Hero Section ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      /* Base gradient: deep teal-to-dark */
+      background:
+        /* Subtle dot/grid tech overlay */
+        radial-gradient(circle, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        /* Directional gradient */
+        linear-gradient(135deg, #02222a 0%, #02222a 40%, #084d53 100%);
+      background-size: 28px 28px, 100% 100%;
+    }
+
+    /* Soft vignette to deepen edges */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(2, 14, 17, 0.65) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── Ghost Watermark ──────────────────────────────────────── */
+    .hero__watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(120px, 22vw, 320px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      z-index: 2;
+      line-height: 1;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────── */
+    .nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      gap: 24px;
+    }
+
+    /* Logo */
+    .nav__logo {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0;
+    }
+
+    .nav__logo-accent {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #f14108;
+      border-radius: 2px;
+      margin-right: 4px;
+      flex-shrink: 0;
+      position: relative;
+      top: -2px;
+    }
+
+    /* Nav links */
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav__links a {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav__links a:hover {
+      color: #ffffff;
+    }
+
+    /* CTA pill */
+    .nav__cta {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: #ffffff;
+      background-color: #084d53;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 100px;
+      padding: 10px 24px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .nav__cta:hover {
+      background-color: #0a6068;
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* ── Hero Body ────────────────────────────────────────────── */
+    .hero__body {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 60px 60px 40px;
+      gap: 80px;
+    }
+
+    /* Left column */
+    .hero__left {
+      flex: 1.1;
+      min-width: 0;
+    }
+
+    .hero__eyebrow {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: #f14108;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero__eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 2px;
+      background-color: #f14108;
+      flex-shrink: 0;
+    }
+
+    .hero__headline {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(42px, 5.5vw, 80px);
+      font-weight: 700;
+      line-height: 1.07;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+    }
+
+    .hero__headline em {
+      font-style: normal;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Right column */
+    .hero__right {
+      flex: 0.9;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 32px;
+      padding-top: 8px;
+    }
+
+    .hero__copy {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 420px;
+    }
+
+    /* CTA button */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background-color: #f14108;
+      border: none;
+      border-radius: 4px;
+      padding: 16px 28px;
+      text-decoration: none;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-cta:hover {
+      background-color: #d63a07;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(241, 65, 8, 0.35);
+    }
+
+    .btn-cta__arrow {
+      font-size: 18px;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-cta:hover .btn-cta__arrow {
+      transform: translateX(4px);
+    }
+
+    /* ── Divider line above stats ─────────────────────────────── */
+    .hero__divider {
+      position: relative;
+      z-index: 10;
+      margin: 0 60px;
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ── Stats Bar ────────────────────────────────────────────── */
+    .stats {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0 60px;
+    }
+
+    .stats__item {
+      padding: 36px 0 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    /* Vertical dividers between stats */
+    .stats__item + .stats__item {
+      padding-left: 40px;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      margin-left: 40px;
+    }
+
+    /* Remove margin/padding trick — use a cleaner approach */
+    .stats {
+      gap: 0;
+    }
+
+    .stats__item + .stats__item {
+      padding-left: 0;
+      margin-left: 0;
+      border-left: none;
+    }
+
+    /* Re-apply via inner wrapper */
+    .stats__inner {
+      padding: 36px 40px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      height: 100%;
+    }
+
+    .stats__item:first-child .stats__inner {
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .stats__number {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(32px, 3.5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .stats__label {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+    }
+
+    /* Accent color on first stat number */
+    .stats__item:first-child .stats__number {
+      color: #f14108;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .nav {
+        padding: 24px 40px;
+      }
+
+      .nav__links {
+        gap: 24px;
+      }
+
+      .hero__body {
+        padding: 40px 40px 32px;
+        gap: 48px;
+      }
+
+      .hero__divider {
+        margin: 0 40px;
+      }
+
+      .stats {
+        padding: 0 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        padding: 20px 24px;
+        flex-wrap: wrap;
+      }
+
+      .nav__links {
+        display: none;
+      }
+
+      .hero__body {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 24px 32px;
+        gap: 36px;
+      }
+
+      .hero__right {
+        padding-top: 0;
+      }
+
+      .hero__copy {
+        max-width: 100%;
+      }
+
+      .hero__divider {
+        margin: 0 24px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 24px;
+      }
+
+      .stats__item:nth-child(3) .stats__inner {
+        border-left: none;
+        padding-left: 0;
+      }
+
+      .stats__item:nth-child(2) .stats__inner {
+        padding-left: 24px;
+      }
+
+      .stats__item:nth-child(4) .stats__inner {
+        padding-left: 24px;
+      }
+
+      /* Add top border between rows */
+      .stats__item:nth-child(3),
+      .stats__item:nth-child(4) {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav__cta {
+        padding: 9px 18px;
+        font-size: 11px;
+      }
+
+      .hero__headline {
+        font-size: clamp(36px, 10vw, 52px);
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════════════════════════ -->
+  <section class="hero" aria-label="Hero">
+
+    <!-- Ghost watermark -->
+    <span class="hero__watermark" aria-hidden="true">PCKUP</span>
+
+    <!-- ── Navigation ── -->
+    <header role="banner">
+      <nav class="nav" aria-label="Primary navigation">
+
+        <!-- Logo -->
+        <a href="/" class="nav__logo" aria-label="Pckup home">
+          <span class="nav__logo-accent" aria-hidden="true"></span>Pckup
+        </a>
+
+        <!-- Center links -->
+        <ul class="nav__links" role="list">
+          <li><a href="#solutions">Solutions</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#platform">Platform</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <!-- CTA pill -->
+        <a href="#get-started" class="nav__cta">Get Started</a>
+
+      </nav>
+    </header>
+
+    <!-- ── Hero Body ── -->
+    <main class="hero__body">
+
+      <!-- Left: headline -->
+      <div class="hero__left">
+        <p class="hero__eyebrow">Last-Mile Intelligence</p>
+        <h1 class="hero__headline">
+          Your Intelligent<br />
+          Last-Mile<br />
+          <em>Delivery Partner</em>
+        </h1>
+      </div>
+
+      <!-- Right: copy + CTA -->
+      <div class="hero__right">
+        <p class="hero__copy">
+          From same-day dispatch to enterprise scale — Pckup delivers AI-powered logistics that gives businesses the trust, speed, and control they need.
+        </p>
+        <a href="#demo" class="btn-cta">
+          Request a Demo
+          <span class="btn-cta__arrow" aria-hidden="true">&#8594;</span>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- Divider -->
+    <hr class="hero__divider" aria-hidden="true" />
+
+    <!-- ── Stats Bar ── -->
+    <aside aria-label="Key statistics">
+      <dl class="stats">
+
+        <div class="stats__item">
+          <div class="stats__inner">
+            <dt class="stats__label">On-time delivery</dt>
+            <dd class="stats__number">99.4%</dd>
+          </div>
+        </div>
+
+        <div class="stats__item">
+          <div class="stats__inner">
+            <dt class="stats__label">Deliveries completed</dt>
+            <dd class="stats__number">10M+</dd>
+          </div>
+        </div>
+
+        <div class="stats__item">
+          <div class="stats__inner">
+            <dt class="stats__label">AI dispatch support</dt>
+            <dd class="stats__number">24/7</dd>
+          </div>
+        </div>
+
+        <div class="stats__item">
+          <div class="stats__inner">
+            <dt class="stats__label">Business clients</dt>
+            <dd class="stats__number">500+</dd>
+          </div>
+        </div>
+
+      </dl>
+    </aside>
+
+  </section>
+
+</body>
+</html>

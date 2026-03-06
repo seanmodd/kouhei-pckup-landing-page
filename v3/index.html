@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pckup — AI-Powered Last-Mile Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@300;400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #02222a;
+      color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── HERO SECTION ─────────────────────────────────────────── */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background-image:
+        linear-gradient(to bottom, rgba(2,34,42,0.60) 0%, rgba(2,34,42,0.50) 60%, rgba(2,34,42,0.72) 100%),
+        url('images/background.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────────────── */
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(2, 34, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .nav__inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 7%;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .nav__logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    .nav__links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav__links a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 200ms ease;
+      white-space: nowrap;
+    }
+
+    .nav__links a:hover {
+      color: #ffffff;
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #f14108;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 9999px;
+      padding: 10px 22px;
+      transition: background 200ms ease, transform 150ms ease;
+      white-space: nowrap;
+    }
+
+    .btn-pill:hover {
+      background: #d93907;
+      transform: translateY(-1px);
+    }
+
+    .btn-pill:active {
+      transform: translateY(0);
+    }
+
+    /* ─── GHOST WATERMARK ───────────────────────────────────────── */
+
+    .hero__watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(140px, 24vw, 360px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1;
+    }
+
+    /* ─── HERO BODY ─────────────────────────────────────────────── */
+
+    .hero__body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 80px 7%;
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      gap: 60px;
+    }
+
+    .hero__left {
+      flex: 0 0 55%;
+      max-width: 55%;
+    }
+
+    .hero__left h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.0;
+      mix-blend-mode: overlay;
+    }
+
+    .hero__right {
+      flex: 0 0 45%;
+      max-width: 45%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
+
+    .hero__right p {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.5;
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f14108;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 14px 28px;
+      transition: background 200ms ease, transform 150ms ease;
+      white-space: nowrap;
+    }
+
+    .btn-cta:hover {
+      background: #d93907;
+      transform: translateY(-1px);
+    }
+
+    .btn-cta:active {
+      transform: translateY(0);
+    }
+
+    /* ─── STATS BAR ─────────────────────────────────────────────── */
+
+    .stats {
+      position: relative;
+      z-index: 1;
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 28px 0;
+    }
+
+    .stats__inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 7%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .stat:not(:first-child) {
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .stat__number {
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      font-size: clamp(36px, 3.5vw, 52px);
+      font-weight: 400;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .stat__label {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────── */
+
+    @media (max-width: 768px) {
+      .nav__links {
+        display: none;
+      }
+
+      .nav__inner {
+        padding: 0 5%;
+      }
+
+      .hero__watermark {
+        font-size: 28vw;
+      }
+
+      .hero__body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 40px;
+        padding: 60px 5%;
+      }
+
+      .hero__left,
+      .hero__right {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .stats__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px 0;
+        padding: 0 5%;
+      }
+
+      .stat:nth-child(3) {
+        border-left: none;
+      }
+
+      .stat:nth-child(3),
+      .stat:nth-child(4) {
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .stat:nth-child(even) {
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero__left h1 {
+        font-size: clamp(34px, 9vw, 48px);
+      }
+
+      .hero__right p {
+        font-size: 15px;
+      }
+
+      .stats__inner {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat__number {
+        font-size: clamp(32px, 7vw, 44px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+
+    <!-- 1. Nav -->
+    <header class="nav">
+      <nav class="nav__inner">
+        <a href="#" class="nav__logo">
+          <img src="pckup-logo-light.png" alt="Pckup" height="32">
+        </a>
+        <ul class="nav__links">
+          <li><a href="#">Solutions</a></li>
+          <li><a href="#">Platform</a></li>
+          <li><a href="#">Industries</a></li>
+          <li><a href="#">Company</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <a href="#" class="nav__cta btn-pill">Talk to Us</a>
+      </nav>
+    </header>
+
+    <!-- 2. Ghost watermark -->
+    <div class="hero__watermark" aria-hidden="true">PCKUP</div>
+
+    <!-- 3. Hero body (two columns) -->
+    <main class="hero__body">
+      <div class="hero__left">
+        <h1>Your AI-Powered<br>Last-Mile<br>Delivery Partner</h1>
+      </div>
+      <div class="hero__right">
+        <p>From same-day dispatch to enterprise scale — Pckup combines AI intelligence with human expertise to give your business the trust, speed, and control it deserves.</p>
+        <a href="#" class="btn-cta">Request a Demo &rarr;</a>
+      </div>
+    </main>
+
+    <!-- 4. Stats bar -->
+    <div class="stats">
+      <div class="stats__inner">
+        <div class="stat">
+          <span class="stat__number">99.4%</span>
+          <span class="stat__label">On-time Delivery</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">10M+</span>
+          <span class="stat__label">Deliveries Completed</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">24/7</span>
+          <span class="stat__label">AI Dispatch Support</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">500+</span>
+          <span class="stat__label">Business Clients</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</body>
+</html>
