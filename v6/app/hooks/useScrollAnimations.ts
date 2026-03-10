@@ -24,8 +24,8 @@ export function useScrollAnimations() {
       once: true,
     });
 
-    // Counter animation
-    document.querySelectorAll(".counter").forEach((counter) => {
+    // Counter animation (skip hero stats — those are animated by Hero component)
+    document.querySelectorAll(".counter:not(.hero__stats-bar .counter)").forEach((counter) => {
       const target = parseFloat(
         counter.getAttribute("data-target") || "0"
       );

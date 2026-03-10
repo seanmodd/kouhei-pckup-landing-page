@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <Preloader onComplete={handlePreloaderComplete} />
-      <Navbar />
+      <Navbar ready={heroReady} />
 
       <div className="main-wrapper" id="mainWrapper">
         <Hero ready={heroReady} />

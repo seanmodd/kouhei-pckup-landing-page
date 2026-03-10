@@ -15,7 +15,11 @@ const NAV_LINKS = [
   { href: "#contact", label: "Contact" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  ready?: boolean;
+}
+
+export default function Navbar({ ready = false }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -28,6 +32,17 @@ export default function Navbar() {
       },
     });
   }, []);
+
+  useEffect(() => {
+    if (ready) {
+      gsap.to("#nav", {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+      });
+    }
+  }, [ready]);
 
   const toggleMenu = () => {
     setMobileOpen((prev) => {

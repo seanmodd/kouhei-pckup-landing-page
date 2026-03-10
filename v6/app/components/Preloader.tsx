@@ -1,73 +1,137 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { gsap } from "gsap";
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
+// Shared polygon points for the Pckup logo
+export const LOGO_POINTS =
+  "151.67 130 108.33 130 108.33 86.67 151.67 86.67 151.67 86.67 151.67 86.67 195 43.33 108.33 43.33 108.33 43.33 108.33 43.33 65 86.67 65 86.67 65 216.67 108.33 173.33 151.67 173.33 195 130 195 86.67 151.67 86.67 151.67 130";
+
 export default function Preloader({ onComplete }: PreloaderProps) {
   const preloaderRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLImageElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const polygonRef = useRef<SVGPolygonElement>(null);
+  const fillOverlayRef = useRef<SVGPolygonElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const logo = logoRef.current;
-    const bar = barRef.current;
     const preloader = preloaderRef.current;
-    if (!logo || !bar || !preloader) return;
+    const bar = barRef.current;
+    const svg = svgRef.current;
+    const polygon = polygonRef.current;
+    const fillOverlay = fillOverlayRef.current;
+    const bg = bgRef.current;
+    if (!preloader || !bar || !svg || !polygon || !fillOverlay || !bg) return;
 
-    // Logo pulse in
-    gsap.to(logo, {
-      scale: 1,
-      opacity: 1,
-      duration: 0.8,
-      ease: "power2.out",
+    // Get the total length of the polygon path for stroke animation
+    const totalLength = polygon.getTotalLength();
+    polygon.style.strokeDasharray = `${totalLength}`;
+    polygon.style.strokeDashoffset = `${totalLength}`;
+
+    const tl = gsap.timeline();
+
+    // ── Phase 1: Progress bar crawls ──
+    tl.to(bar, {
+      width: "100%",
+      duration: 1.8,
+      ease: "power1.inOut",
     });
 
-    // Simulate progress
-    let progress = 0;
-    const progressInterval = setInterval(() => {
-      progress += Math.random() * 25;
-      if (progress > 100) progress = 100;
-      bar.style.width = progress + "%";
-      if (progress >= 100) clearInterval(progressInterval);
-    }, 200);
+    // Fade out the progress bar
+    tl.to(bar, {
+      opacity: 0,
+      duration: 0.3,
+      ease: "power1.out",
+    });
 
-    // Exit animation
-    const exitTimer = setTimeout(() => {
-      bar.style.width = "100%";
-      gsap.to(preloader, {
-        y: "-100%",
-        duration: 1.2,
-        ease: "power4.inOut",
-        delay: 0.6,
-        onComplete: () => {
-          preloader.style.display = "none";
-          onComplete();
-        },
-      });
-    }, 1500);
+    // ── Phase 2: SVG stroke draw ──
+    tl.to(svg, {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power1.out",
+    }, "-=0.1");
+
+    tl.to(polygon, {
+      strokeDashoffset: 0,
+      duration: 1.5,
+      ease: "power2.inOut",
+    });
+
+    // ── Phase 3: Fill reveal ──
+    tl.to(fillOverlay, {
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.in",
+    });
+
+    // Brief hold
+    tl.to({}, { duration: 0.5 });
+
+    // ── Phase 4: Fade background, keep logo in place ──
+    // Fade out the black background + bokeh, revealing the page behind
+    tl.to(bg, {
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.inOut",
+    });
+
+    // Fade out the preloader logo (hero logo is now visible underneath at same coords)
+    tl.to(svg, {
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.in",
+    }, "-=0.2");
+
+    // Remove preloader from DOM flow
+    tl.call(() => {
+      preloader.style.display = "none";
+      onComplete();
+    });
 
     return () => {
-      clearInterval(progressInterval);
-      clearTimeout(exitTimer);
+      tl.kill();
     };
   }, [onComplete]);
 
   return (
     <div className="preloader" ref={preloaderRef}>
-      <Image
-        ref={logoRef}
-        src="/pckup-logo-light.png"
-        alt="Pckup"
-        width={120}
-        height={36}
-        className="preloader__logo"
-        priority
-      />
+      {/* Background layer (fades independently from logo) */}
+      <div className="preloader__bg" ref={bgRef}>
+        <div className="preloader__bokeh preloader__bokeh--1" />
+        <div className="preloader__bokeh preloader__bokeh--2" />
+        <div className="preloader__bokeh preloader__bokeh--3" />
+      </div>
+
+      {/* SVG Logo — centered with fixed positioning so hero logo can match */}
+      <svg
+        ref={svgRef}
+        className="preloader__svg"
+        viewBox="0 0 260 260"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polygon
+          ref={polygonRef}
+          points={LOGO_POINTS}
+          fill="transparent"
+          stroke="#F14108"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        <polygon
+          ref={fillOverlayRef}
+          points={LOGO_POINTS}
+          fill="#F14108"
+          stroke="none"
+          style={{ opacity: 0 }}
+        />
+      </svg>
+
+      {/* Progress bar */}
       <div className="preloader__bar-track">
         <div className="preloader__bar-fill" ref={barRef} />
       </div>
