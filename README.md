@@ -32,7 +32,53 @@ The `sean-edits` branch introduces a refreshed visual identity with updated typo
 
 ---
 
-### 🏠 Hero Section
+### 🎬 Preloader & Hero Animation
+
+See the preloader animation, hero reveal, and background in action:
+
+<table>
+<tr>
+<th>main (Original) — Static Background</th>
+<th>sean-edits (Updated) — Video Background</th>
+</tr>
+<tr>
+<td><img src="screenshots/main/preloader.webp" alt="Main branch preloader animation" width="100%"></td>
+<td><img src="screenshots/sean-edits/preloader.webp" alt="Sean-edits branch preloader animation" width="100%"></td>
+</tr>
+</table>
+
+**What to notice:**
+- **Main**: Static sunset coastal road image behind the Pckup logo and hero text
+- **Sean-edits**: Looping highway interchange video at 45% opacity creates a more dynamic, cinematic feel
+- Both versions feature the same GSAP preloader animation, text reveal, and counter animations
+
+---
+
+### 🧭 Navigation Flow
+
+Watch how the site navigates when clicking through the top menu (About → Values → Services → Why Pckup → Contact):
+
+<table>
+<tr>
+<th>main (Original)</th>
+<th>sean-edits (Updated)</th>
+</tr>
+<tr>
+<td><img src="screenshots/main/navigation.webp" alt="Main branch navigation flow" width="100%"></td>
+<td><img src="screenshots/sean-edits/navigation.webp" alt="Sean-edits branch navigation flow" width="100%"></td>
+</tr>
+</table>
+
+**What to notice:**
+- Both versions feature smooth Lenis-powered scroll navigation
+- Typography differences are visible throughout: **Montserrat** vs **TASA Orbiter** for headings, **Inter** vs **IBM Plex Sans** for body text
+- The fixed navbar transitions to a frosted glass effect when scrolled
+
+---
+
+### 🖼️ Static Screenshots
+
+#### 🏠 Hero Section
 
 <table>
 <tr>
@@ -52,7 +98,7 @@ The `sean-edits` branch introduces a refreshed visual identity with updated typo
 
 ---
 
-### 📊 Stats & Values Section
+#### 📊 Stats & Values Section
 
 <table>
 <tr>
@@ -72,7 +118,7 @@ The `sean-edits` branch introduces a refreshed visual identity with updated typo
 
 ---
 
-### 🛠️ Services Section
+#### 🛠️ Services Section
 
 <table>
 <tr>
@@ -92,7 +138,7 @@ The `sean-edits` branch introduces a refreshed visual identity with updated typo
 
 ---
 
-### 🦶 Footer Section
+#### 🦶 Footer Section
 
 <table>
 <tr>
@@ -165,9 +211,9 @@ kouhei-pckup-landing-page/
 │   │   ├── layout.tsx           # Root layout with font config
 │   │   └── page.tsx             # Home page
 │   └── public/                  # Static assets
-├── screenshots/                 # Branch comparison screenshots
-│   ├── main/                    # Original design screenshots
-│   └── sean-edits/              # Updated design screenshots
+├── screenshots/                 # Branch comparison media
+│   ├── main/                    # Original design (screenshots + recordings)
+│   └── sean-edits/              # Updated design (screenshots + recordings)
 └── README.md                    # This file
 ```
 
