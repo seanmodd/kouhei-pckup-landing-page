@@ -22,7 +22,7 @@ export default function Footer() {
     <footer className="footer" id="footer">
       <div className="footer__inner">
         <div>
-          <a href="#" className="nav__logo" style={{ display: "inline-block" }}>
+          <a href="#" className="nav__logo">
             <Image
               src="/pckup-logo-light.png"
               alt="Pckup"
@@ -32,7 +32,7 @@ export default function Footer() {
           </a>
           <p className="footer__brand-tagline">
             Intelligent delivery infrastructure for businesses that never
-            stop moving.
+            stop moving. Powered by Senpex.
           </p>
         </div>
         <div>
