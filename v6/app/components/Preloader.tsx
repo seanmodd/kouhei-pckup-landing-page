@@ -52,7 +52,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     // ── Phase 1: Progress bar crawls ──
     tl.to(bar, {
       width: "100%",
-      duration: 1.8,
+      duration: 1.2,
       ease: "power1.inOut",
     });
 
@@ -61,14 +61,15 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       opacity: 0,
       duration: 0.3,
       ease: "power1.out",
-    });
+    }, "-=0.3");
 
     // ── Phase 2: SVG stroke draw ──
+    // Start fading in the SVG and tracing it almost immediately
     tl.to(svg, {
       opacity: 1,
       duration: 0.3,
       ease: "power1.out",
-    }, "-=0.1");
+    }, 0.1);
 
     tl.to(
       [polygon, textObj], 
@@ -76,7 +77,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         strokeDashoffset: 0,
         duration: 1.5,
         ease: "power2.inOut",
-      }
+      },
+      0.2
     );
 
     // ── Phase 3: Fill reveal ──
