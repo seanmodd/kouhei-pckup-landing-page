@@ -92,6 +92,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
+  overflow: visible; /* Ensure text doesn't get clipped */
 }
 
 /* Progress bar — sits at the very bottom, full width */
@@ -309,6 +310,7 @@ body {
   transform: translate(-50%, -50%);
   opacity: 0.3;
   pointer-events: none;
+  overflow: visible;
 }
 
 /* Watermark — large semi-transparent logo behind truck photo */
@@ -386,6 +388,7 @@ body {
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: #fff;
+  opacity: 0; /* Add opacity: 0 to prevent flash before split text animation */
 }
 
 /* SplitType lines get overflow hidden wrappers */

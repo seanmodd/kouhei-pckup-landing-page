@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 450 60" xmlns="http://www.w3.org/2000/svg">
+  <text 
+    x="225" 
+    y="40" 
+    font-family="system-ui, -apple-system, sans-serif" 
+    font-size="30" 
+    font-weight="700" 
+    fill="transparent" 
+    stroke="#F14108" 
+    stroke-width="1.5" 
+    text-anchor="middle"
+    letter-spacing="0.05em"
+  >
+    Powered by Senpex
+  </text>
+</svg>

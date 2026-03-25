@@ -44,6 +44,7 @@ export default function Hero({ ready }: HeroProps) {
     });
 
     // Animate lines
+    gsap.set(titleEl, { opacity: 1 }); // make parent visible once JS takes over
     gsap.fromTo(
       split.lines || [],
       { y: "100%", opacity: 0, rotateX: 10 },
