@@ -64,8 +64,8 @@ export default function Navbar({ ready = false }: NavbarProps) {
             <Image
               src="/pckup-logo-light.png"
               alt="Pckup"
-              width={100}
-              height={28}
+              width={85}
+              height={24}
               priority
             />
           </a>
