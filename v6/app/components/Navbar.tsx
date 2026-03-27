@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,6 +21,11 @@ interface NavbarProps {
 
 export default function Navbar({ ready = false }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileOpenRef = useRef(false);
+
+  useEffect(() => {
+    mobileOpenRef.current = mobileOpen;
+  }, [mobileOpen]);
 
   useEffect(() => {
     ScrollTrigger.create({
@@ -32,7 +37,7 @@ export default function Navbar({ ready = false }: NavbarProps) {
       },
     });
 
-    // Hide navbar when footer is visible
+    // Hide navbar when footer is visible (but not when mobile menu is open)
     const footer = document.getElementById("footer");
     if (footer) {
       ScrollTrigger.create({
@@ -40,7 +45,9 @@ export default function Navbar({ ready = false }: NavbarProps) {
         start: "top 95%",
         end: "top 60%",
         onEnter: () => {
-          gsap.to("#nav", { opacity: 0, duration: 0.3, ease: "power2.out", pointerEvents: "none" });
+          if (!mobileOpenRef.current) {
+            gsap.to("#nav", { opacity: 0, duration: 0.3, ease: "power2.out", pointerEvents: "none" });
+          }
         },
         onLeaveBack: () => {
           gsap.to("#nav", { opacity: 1, duration: 0.3, ease: "power2.out", pointerEvents: "auto" });
@@ -62,8 +69,25 @@ export default function Navbar({ ready = false }: NavbarProps) {
 
   const toggleMenu = () => {
     setMobileOpen((prev) => {
-      document.body.style.overflow = !prev ? "hidden" : "";
-      return !prev;
+      const next = !prev;
+      document.body.style.overflow = next ? "hidden" : "";
+      // Ensure nav is visible/tappable when opening menu at footer
+      const nav = document.getElementById("nav");
+      if (nav) {
+        if (next) {
+          gsap.set(nav, { opacity: 1, pointerEvents: "auto" });
+        } else {
+          // If closing menu while at footer, re-hide nav
+          const footer = document.getElementById("footer");
+          if (footer) {
+            const footerRect = footer.getBoundingClientRect();
+            if (footerRect.top < window.innerHeight * 0.95) {
+              gsap.to(nav, { opacity: 0, duration: 0.3, ease: "power2.out", pointerEvents: "none" });
+            }
+          }
+        }
+      }
+      return next;
     });
   };
 
