@@ -904,9 +904,19 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   padding: 64px 7% 40px;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  display: flex;
   gap: 48px;
+}
+
+.footer__brand {
+  flex: 0 0 280px;
+}
+
+.footer__columns {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
 }
 
 .footer__brand-tagline {
@@ -999,8 +1009,17 @@ body {
   .pillars { grid-template-columns: 1fr; }
 
   .footer__inner {
-    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
     gap: 32px;
+  }
+
+  .footer__brand {
+    flex: none;
+  }
+
+  .footer__columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
   }
 }
 
@@ -1010,7 +1029,10 @@ body {
 
   .testi-slide { padding: 0 5%; }
 
-  .footer__inner { grid-template-columns: 1fr; }
+  .footer__columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
 
   .footer__bottom {
     flex-direction: column;
