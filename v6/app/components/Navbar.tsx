@@ -31,6 +31,22 @@ export default function Navbar({ ready = false }: NavbarProps) {
           ?.classList.toggle("scrolled", self.scroll() > 50);
       },
     });
+
+    // Hide navbar when footer is visible
+    const footer = document.getElementById("footer");
+    if (footer) {
+      ScrollTrigger.create({
+        trigger: footer,
+        start: "top 95%",
+        end: "top 60%",
+        onEnter: () => {
+          gsap.to("#nav", { opacity: 0, duration: 0.3, ease: "power2.out", pointerEvents: "none" });
+        },
+        onLeaveBack: () => {
+          gsap.to("#nav", { opacity: 1, duration: 0.3, ease: "power2.out", pointerEvents: "auto" });
+        },
+      });
+    }
   }, []);
 
   useEffect(() => {
