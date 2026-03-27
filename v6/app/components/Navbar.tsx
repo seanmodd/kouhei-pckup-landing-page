@@ -25,24 +25,27 @@ export default function Navbar({ ready = false }: NavbarProps) {
 
   useEffect(() => {
     mobileOpenRef.current = mobileOpen;
-    // If menu just opened while at footer, remove the at-footer class so nav stays visible
-    const nav = document.getElementById("nav");
-    if (nav && mobileOpen) {
-      nav.classList.remove("nav--at-footer");
+    // If menu just opened, ensure navbar is visible
+    if (mobileOpen) {
+      const nav = document.getElementById("nav");
+      if (nav) nav.classList.remove("nav--at-footer");
+      gsap.to("#nav", { y: 0, duration: 0.35, ease: "power2.out", overwrite: "auto" });
     }
   }, [mobileOpen]);
 
   useEffect(() => {
+    // scrolled class via ScrollTrigger
     ScrollTrigger.create({
       start: 50,
       onUpdate: (self) => {
         const nav = document.getElementById("nav");
         if (!nav) return;
-        nav.classList.toggle("scrolled", self.scroll() > 50);
+        const scrollY = self.scroll();
+        nav.classList.toggle("scrolled", scrollY > 50);
 
         // Hide navbar when scrolled to bottom (footer revealed)
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const nearBottom = self.scroll() > maxScroll - 100;
+        const nearBottom = scrollY > maxScroll - 100;
         if (nearBottom && !mobileOpenRef.current) {
           nav.classList.add("nav--at-footer");
         } else if (!nearBottom) {
@@ -50,6 +53,26 @@ export default function Navbar({ ready = false }: NavbarProps) {
         }
       },
     });
+
+    // Hide on scroll down / show on scroll up via plain scroll listener.
+    // GSAP sets inline transform on #nav, so we must use gsap (not CSS classes)
+    // to override it — CSS classes lose to inline styles.
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const nav = document.getElementById("nav");
+      if (!nav || mobileOpenRef.current) return;
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY;
+      if (scrollingDown && currentScrollY > 80) {
+        gsap.to(nav, { y: "-100%", duration: 0.35, ease: "power2.inOut", overwrite: "auto" });
+      } else if (!scrollingDown) {
+        gsap.to(nav, { y: 0, duration: 0.35, ease: "power2.inOut", overwrite: "auto" });
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
