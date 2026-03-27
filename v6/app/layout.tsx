@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { TASA_Orbiter, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const tasaOrbiter = TASA_Orbiter({
+const tasaOrbiter = localFont({
+  src: [
+    { path: "../TASA_Orbiter_400.ttf", weight: "400", style: "normal" },
+    { path: "../TASA_Orbiter_700.ttf", weight: "700", style: "normal" },
+  ],
   variable: "--font-tasa-orbiter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
