@@ -8,7 +8,7 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 
 body {
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-ibm-plex), system-ui, sans-serif;
   background: #0a0f1a;
   color: #fff;
   -webkit-font-smoothing: antialiased;
@@ -16,8 +16,8 @@ body {
   overflow-x: hidden;
 }
 
-.font-display { font-family: var(--font-montserrat), sans-serif; }
-.font-mono { font-family: var(--font-share-tech-mono), monospace; }
+.font-display { font-family: var(--font-tasa-orbiter), sans-serif; }
+.font-mono { font-family: var(--font-tasa-orbiter), monospace; }
 
 /* ═══════════════════════════════════════════════════════════════
    PRELOADER
@@ -92,6 +92,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
+  overflow: visible; /* Ensure text doesn't get clipped */
 }
 
 /* Progress bar — sits at the very bottom, full width */
@@ -128,7 +129,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 110;
   height: 70px;
   display: flex;
   align-items: center;
@@ -143,6 +144,11 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom-color: rgba(255,255,255,0.07);
+}
+
+.nav.nav--at-footer {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nav__inner {
@@ -169,7 +175,7 @@ body {
 }
 
 .nav__links a {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -202,7 +208,7 @@ body {
   flex-shrink: 0;
   background: #F14108;
   color: #fff;
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -259,7 +265,7 @@ body {
 .nav__mobile-overlay.active { opacity: 1; visibility: visible; }
 
 .nav__mobile-overlay a {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 24px;
   font-weight: 700;
   color: #fff;
@@ -309,6 +315,7 @@ body {
   transform: translate(-50%, -50%);
   opacity: 0.3;
   pointer-events: none;
+  overflow: visible;
 }
 
 /* Watermark — large semi-transparent logo behind truck photo */
@@ -328,15 +335,18 @@ body {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: url('/images/background.jpg') center/cover no-repeat;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transform: scale(1.08);
+  opacity: 0.45;
 }
 
 .hero__overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(to top, #0a0f1a 0%, rgba(10,15,26,0.7) 35%, rgba(10,15,26,0.2) 65%, transparent 100%);
+  background: linear-gradient(to top, #0a0f1a 0%, rgba(10,15,26,0.75) 30%, rgba(10,15,26,0.35) 60%, rgba(10,15,26,0.2) 100%);
 }
 
 .hero__content {
@@ -366,7 +376,7 @@ body {
 }
 
 .hero__label {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.3em;
@@ -377,12 +387,13 @@ body {
 }
 
 .hero__title {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: clamp(36px, 5.5vw, 72px);
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: #fff;
+  opacity: 0; /* Add opacity: 0 to prevent flash before split text animation */
 }
 
 /* SplitType lines get overflow hidden wrappers */
@@ -392,7 +403,7 @@ body {
 }
 
 .hero__subtitle {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-ibm-plex), sans-serif;
   font-size: clamp(15px, 1.2vw, 18px);
   font-weight: 300;
   color: rgba(255,255,255,0.6);
@@ -431,7 +442,7 @@ body {
 }
 
 .hero__stat-number {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: clamp(24px, 2.5vw, 36px);
   font-weight: 800;
   color: #fff;
@@ -441,7 +452,7 @@ body {
 .hero__stat-number .accent { color: #F14108; }
 
 .hero__stat-label {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-ibm-plex), sans-serif;
   font-size: 12px;
   color: rgba(255,255,255,0.4);
   text-transform: uppercase;
@@ -454,7 +465,7 @@ body {
   gap: 8px;
   background: #F14108;
   color: #fff;
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -475,7 +486,7 @@ body {
   gap: 8px;
   background: transparent;
   color: #fff;
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -509,7 +520,7 @@ body {
 }
 
 .section__label {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.3em;
@@ -519,7 +530,7 @@ body {
 }
 
 .section__heading {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: clamp(32px, 4vw, 56px);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -546,7 +557,7 @@ body {
 }
 
 .stat-card__number {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: clamp(36px, 4vw, 60px);
   font-weight: 800;
   color: #fff;
@@ -597,14 +608,14 @@ body {
 .values__list:hover .values__item:not(:hover) { opacity: 0.25; }
 
 .values__num {
-  font-family: var(--font-share-tech-mono), monospace;
+  font-family: var(--font-tasa-orbiter), monospace;
   font-size: 13px;
   color: #F14108;
   flex-shrink: 0;
 }
 
 .values__name {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: clamp(20px, 2vw, 28px);
   font-weight: 700;
   color: #fff;
@@ -641,14 +652,14 @@ body {
 }
 
 .service-card__num {
-  font-family: var(--font-share-tech-mono), monospace;
+  font-family: var(--font-tasa-orbiter), monospace;
   font-size: 13px;
   color: #F14108;
   letter-spacing: 0.1em;
 }
 
 .service-card__title {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 20px;
   font-weight: 700;
   margin-top: 16px;
@@ -714,7 +725,7 @@ body {
 }
 
 .pillar__title {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #fff;
@@ -740,7 +751,7 @@ body {
 }
 
 .testi-slide__tag {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -750,7 +761,7 @@ body {
 }
 
 .testi-slide__quote {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-ibm-plex), sans-serif;
   font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 300;
   color: rgba(255,255,255,0.8);
@@ -762,7 +773,7 @@ body {
 
 .testi-slide__author {
   margin-top: 32px;
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: #fff;
@@ -869,7 +880,7 @@ body {
 }
 
 .cta-section__heading {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: clamp(32px, 5vw, 64px);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -898,13 +909,23 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   padding: 64px 7% 40px;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  display: flex;
   gap: 48px;
 }
 
+.footer__brand {
+  flex: 0 0 280px;
+}
+
+.footer__columns {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
 .footer__brand-tagline {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.4;
@@ -913,7 +934,7 @@ body {
 }
 
 .footer__col-title {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-tasa-orbiter), sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -993,8 +1014,17 @@ body {
   .pillars { grid-template-columns: 1fr; }
 
   .footer__inner {
-    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
     gap: 32px;
+  }
+
+  .footer__brand {
+    flex: none;
+  }
+
+  .footer__columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
   }
 }
 
@@ -1004,7 +1034,10 @@ body {
 
   .testi-slide { padding: 0 5%; }
 
-  .footer__inner { grid-template-columns: 1fr; }
+  .footer__columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
 
   .footer__bottom {
     flex-direction: column;

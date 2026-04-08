@@ -1,25 +1,21 @@
 import type { Metadata } from "next";
-import { Montserrat, Inter, Share_Tech_Mono } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
+const tasaOrbiter = localFont({
+  src: [
+    { path: "../TASA_Orbiter_400.ttf", weight: "400", style: "normal" },
+    { path: "../TASA_Orbiter_700.ttf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-tasa-orbiter",
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const ibmPlex = IBM_Plex_Sans({
+  variable: "--font-ibm-plex",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-});
-
-const shareTechMono = Share_Tech_Mono({
-  variable: "--font-share-tech-mono",
-  subsets: ["latin"],
-  weight: "400",
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -37,10 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.variable} ${inter.variable} ${shareTechMono.variable}`}
+        className={`${tasaOrbiter.variable} ${ibmPlex.variable}`}
       >
         {children}
       </body>
     </html>
   );
 }
+

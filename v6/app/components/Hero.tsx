@@ -44,6 +44,7 @@ export default function Hero({ ready }: HeroProps) {
     });
 
     // Animate lines
+    gsap.set(titleEl, { opacity: 1 }); // make parent visible once JS takes over
     gsap.fromTo(
       split.lines || [],
       { y: "100%", opacity: 0, rotateX: 10 },
@@ -134,7 +135,20 @@ export default function Hero({ ready }: HeroProps) {
         />
       </svg>
 
-      <div className="hero__bg" id="heroBg" />
+      <video
+        className="hero__bg"
+        id="heroBg"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+      >
+        <source
+          src="https://r2.vidzflow.com/source/88fe23d4-f5b2-4b0e-ac00-943c1a88815d.mp4"
+          type="video/mp4"
+        />
+      </video>
       <div className="hero__overlay" />
 
       {/* Persistent logo — same position as preloader logo for seamless handoff */}
